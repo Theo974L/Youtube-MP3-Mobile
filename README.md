@@ -64,43 +64,43 @@ app/
 ## ✅ Tâches à prévoir
 
 ### Phase 1 — Setup projet
-- [ ] Créer le projet Android Studio (Kotlin + Compose)
-- [ ] Configurer Hilt
-- [ ] Configurer Room (entité `Track`, DAO basique)
-- [ ] Ajouter la lib d'extraction YouTube (NewPipeExtractor via JitPack ou Maven local)
-- [ ] Ajouter Media3 (`media3-exoplayer`, `media3-session`)
+- [x] Créer le projet Android Studio (Kotlin + Compose)
+- [x] Configurer Hilt
+- [x] Configurer Room (entité `Track`, DAO basique)
+- [x] Ajouter la lib d'extraction YouTube (NewPipeExtractor via JitPack ou Maven local)
+- [x] Ajouter Media3 (`media3-exoplayer`, `media3-session`)
 
 ### Phase 2 — Extraction & téléchargement
-- [ ] Écran "coller un lien YouTube"
-- [ ] Appel à la lib d'extraction → récupérer flux audio + métadonnées (titre, durée, thumbnail)
-- [ ] Worker `WorkManager` pour télécharger le flux audio vers stockage interne
-- [ ] Sauvegarde en base Room une fois le téléchargement terminé
-- [ ] Gestion des erreurs (lien invalide, vidéo indisponible, pas de flux audio)
+- [x] Écran "coller un lien YouTube"
+- [x] Appel à la lib d'extraction → récupérer flux audio + métadonnées (titre, durée, thumbnail)
+- [x] Worker `WorkManager` pour télécharger le flux audio vers stockage interne
+- [x] Sauvegarde en base Room une fois le téléchargement terminé
+- [x] Gestion des erreurs (lien invalide, vidéo indisponible, pas de flux audio)
 
 ### Phase 3 — Bibliothèque
-- [ ] Écran liste des morceaux téléchargés (Compose `LazyColumn`)
-- [ ] Suppression d'un morceau (fichier + entrée DB)
-- [ ] Affichage taille de stockage utilisée
-- [ ] Recherche/tri dans la bibliothèque
+- [x] Écran liste des morceaux téléchargés (Compose `LazyColumn`)
+- [x] Suppression d'un morceau (fichier + entrée DB)
+- [x] Affichage taille de stockage utilisée
+- [x] Recherche/tri dans la bibliothèque
 
 ### Phase 4 — Lecteur audio
-- [ ] `MediaSessionService` avec ExoPlayer (Media3)
-- [ ] Contrôles : play/pause/next/previous
-- [ ] Gestion de la file de lecture (queue) à partir de la bibliothèque
-- [ ] Notification média système (contrôles depuis l'écran verrouillé)
-- [ ] Mini-lecteur persistant en bas de l'écran (Compose)
-- [ ] Écran plein écran avec seekbar, artwork, titre/artiste
+- [x] `MediaSessionService` avec ExoPlayer (Media3)
+- [x] Contrôles : play/pause/next/previous
+- [x] Gestion de la file de lecture (queue) à partir de la bibliothèque
+- [x] Notification média système (contrôles depuis l'écran verrouillé)
+- [x] Mini-lecteur persistant en bas de l'écran (Compose)
+- [x] Écran plein écran avec seekbar, artwork, titre/artiste
 
 ### Phase 5 — Polish
-- [ ] Gestion des interruptions audio (appel téléphonique, autre app média)
-- [ ] Mode aléatoire / répétition
+- [x] Gestion des interruptions audio (appel téléphonique, autre app média)
+- [x] Mode aléatoire / répétition
 - [ ] Icône et nom d'app (usage perso)
-- [ ] Tests manuels sur device réel
+- [x] Tests manuels sur device réel
 
 ### Phase 6 (optionnelle)
-- [ ] Playlists locales
+- [x] Playlists locales
 - [ ] Import depuis plusieurs liens à la fois
-- [ ] Thème sombre/clair
+- [x] Thème sombre/clair
 
 ---
 
