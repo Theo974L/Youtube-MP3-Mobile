@@ -128,5 +128,5 @@ dependencies {
 - Se tenir informé des évolutions de la lib d'extraction (elle casse régulièrement suite aux changements côté YouTube)
 
 ## Preview
-![alt text](Screenshot_20260714_182809_Youtube Player.jpg)
+![alt text](Screenshot.jpg)
 
