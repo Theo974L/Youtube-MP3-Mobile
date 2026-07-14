@@ -1,6 +1,6 @@
 # 🎵 YT Offline Player — App perso Android
 
-Application Android personnelle (non publiée) permettant de télécharger des pistes audio
+Application Android personnelle permettant de télécharger des pistes audio
 depuis YouTube pour une écoute **hors ligne**, avec un lecteur intégré (play/pause/next/previous).
 
 > ⚠️ **Note légale** : ce projet utilise une librairie d'extraction non officielle de YouTube.
