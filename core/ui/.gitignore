@@ -1,0 +1,121 @@
+# ======================================
+# 💡 Android / Kotlin Project .gitignore
+# ======================================
+
+# Gradle build folders
+/build/
+**/build/
+.gradle/
+**/.gradle/
+
+# Local configuration (ne jamais versionner)
+local.properties
+*.iml
+.idea/
+.gradle/
+captures/
+output.json
+
+# Android Studio generated files
+*.apk
+*.ap_
+*.dex
+*.class
+*.log
+
+# Jetpack Compose preview cache
+*.compose-build-cache/
+compose-metrics/
+compose-reports/
+
+# Generated binary / library files
+*.jar
+*.war
+*.aar
+*.so
+*.dll
+*.exe
+*.o
+*.obj
+
+# Kotlin specific
+*.kotlin_module
+*.kotlin_metadata
+
+# IntelliJ / Android Studio
+.idea/
+*.iws
+*.ipr
+*.iml
+*.ids
+*.orig
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/tasks.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries/
+.idea/httpRequests/
+
+# macOS & Windows system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Log & error files
+*.log
+*.trace
+*.tmp
+*.bak
+*.swp
+*.lock
+*.err
+*.out
+
+# Kotlin / Android intermediates (auto-generated)
+**/intermediates/
+**/generated/
+**/tmp/
+**/logs/
+**/outputs/
+
+# NDK / CMake
+.cxx/
+.externalNativeBuild/
+
+# Android Studio profiler
+*.hprof
+
+# Local Gradle properties and caches
+gradle-app.setting
+gradle.properties
+!gradle-wrapper.properties
+gradlew
+gradlew.bat
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+
+# Keystore files (⚠️ très important à ne pas versionner)
+*.jks
+*.keystore
+*.pem
+*.key
+*.p12
+
+# Firebase / Google services secrets
+google-services.json
+GoogleService-Info.plist
+
+# Misc
+*.orig
+*.rej
+*.swo
+*.swn
+
+# ======================================
+# Fin du .gitignore Android / Kotlin
+# ======================================

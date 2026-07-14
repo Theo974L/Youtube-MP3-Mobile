@@ -1,0 +1,85 @@
+# =========================================
+# Android / Kotlin / Jetpack Compose
+# =========================================
+
+# Gradle
+.gradle/
+build/
+*/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local configuration
+local.properties
+*.iml
+
+# Kotlin
+*.kotlin_module
+
+# Android Studio
+.idea/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/gradle.xml
+.idea/**/usage.statistics.xml
+.idea/dictionaries/
+.idea/libraries/
+.idea/modules.xml
+.idea/caches/
+.idea/assetWizardSettings.xml
+
+# Android
+*.apk
+*.ap_ 
+*.aab
+*.dex
+*.class
+*.jar
+*.keystore
+*.log
+*.hprof
+
+# External native build
+.cxx/
+.externalNativeBuild/
+
+# NDK
+obj/
+*.so
+
+# Generated files
+captures/
+output.json
+lint/intermediates/
+lint/generated/
+
+# Firebase / Google Services
+google-services.json
+google-services.json.backup
+*.keystore
+
+# Jetpack Compose tooling
+build/
+.navigation/
+.compose/
+
+# IntelliJ
+out/
+*.ipr
+*.iws
+.idea/
+
+# Misc
+.DS_Store
+*.swp
+*.swo
+
+# Mac
+*.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# JetBrains
+*.iml
