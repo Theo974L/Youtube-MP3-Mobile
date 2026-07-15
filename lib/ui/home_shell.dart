@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data/library_model.dart';
+import 'game_home_screen.dart';
 import 'library_screen.dart';
 import 'mini_player.dart';
 import 'playlists_screen.dart';
@@ -36,7 +37,12 @@ class _HomeShellState extends State<HomeShell> {
         bottom: false,
         child: IndexedStack(
           index: _index,
-          children: const [LibraryScreen(), PlaylistsScreen(), SearchScreen()],
+          children: const [
+            LibraryScreen(),
+            PlaylistsScreen(),
+            GameHomeScreen(),
+            SearchScreen(),
+          ],
         ),
       ),
       bottomNavigationBar: Column(
@@ -56,6 +62,11 @@ class _HomeShellState extends State<HomeShell> {
                 icon: Icon(Icons.queue_music_outlined),
                 selectedIcon: Icon(Icons.queue_music),
                 label: 'Playlists',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.quiz_outlined),
+                selectedIcon: Icon(Icons.quiz),
+                label: 'Jeu',
               ),
               NavigationDestination(
                 icon: Icon(Icons.add_circle_outline),
