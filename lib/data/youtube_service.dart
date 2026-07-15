@@ -46,7 +46,12 @@ class YoutubeService {
     void Function(double? progress)? onProgress,
   }) async {
     final video = await _yt.videos.get(videoIdOrUrl);
-    final manifest = await _yt.videos.streamsClient.getManifest(video.id);
+    // Client "androidVr" : ses URLs de flux ne sont PAS bridées par YouTube,
+    // donc le téléchargement se fait à pleine vitesse (le client web est throttlé).
+    final manifest = await _yt.videos.streamsClient.getManifest(
+      video.id,
+      ytClients: [YoutubeApiClient.androidVr],
+    );
     final audio = manifest.audioOnly.withHighestBitrate();
 
     final dir = await getApplicationDocumentsDirectory();
