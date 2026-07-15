@@ -1,0 +1,67 @@
+# Codemagic CI — build iOS (.ipa) sur macOS dans le cloud, depuis un repo Git.
+# Doc : https://docs.codemagic.io/yaml-quick-start/building-a-flutter-app/
+#
+# AVANT de lancer, dans l'interface Codemagic :
+#   1. Connecte ton repo Git (GitHub…).
+#   2. Teams → Integrations → App Store Connect : ajoute une clé API (App Store Connect API Key).
+#      Donne-lui un nom et reporte-le dans "integrations > app_store_connect" ci-dessous.
+#   3. Vérifie ton bundle identifier iOS (dans Codemagic il est auto-détecté ; sinon corrige-le).
+#
+# Un compte Apple Developer (99 €/an) est requis pour la signature.
+
+workflows:
+  ios-release:
+    name: iOS — build IPA
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      app_store_connect: CodemagicApiKey   # <-- nom de ta clé API configurée dans Codemagic
+    environment:
+      ios_signing:
+        # app_store = pour TestFlight/App Store ; ad_hoc = pour installer sur des appareils enregistrés
+        distribution_type: app_store
+        bundle_identifier: com.laforge.ytOffline   # <-- ton bundle id iOS exact
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Récupérer les packages Flutter
+        script: flutter pub get
+      - name: Préparer la signature (profils gérés par Codemagic)
+        script: xcode-project use-profiles
+      - name: Installer les CocoaPods
+        script: |
+          cd ios && pod install
+      - name: Build IPA
+        script: |
+          flutter build ipa --release \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      email:
+        recipients:
+          - lamoutarde974@gmail.com
+        notify:
+          success: true
+          failure: true
+
+  # Bonus : build Android .apk sur le même CI (utile pour avoir tout au même endroit).
+  android-release:
+    name: Android — build APK
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      flutter: stable
+    scripts:
+      - name: Récupérer les packages Flutter
+        script: flutter pub get
+      - name: Build APK
+        script: flutter build apk --release
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
+    publishing:
+      email:
+        recipients:
+          - lamoutarde974@gmail.com

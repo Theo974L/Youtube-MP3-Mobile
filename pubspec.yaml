@@ -1,0 +1,47 @@
+name: yt_offline
+description: "Lecteur audio offline (YouTube -> local) — Flutter, iOS-ready."
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # État / injection simple
+  provider: ^6.1.2
+
+  # Extraction YouTube (pur Dart, Android + iOS)
+  youtube_explode_dart: ^2.3.4
+
+  # Lecture audio (Android + iOS)
+  just_audio: ^0.9.42
+
+  # Base locale (pas de code-gen)
+  sqflite: ^2.3.3+1
+  path: ^1.9.0
+  path_provider: ^2.1.4
+
+  # Divers
+  cached_network_image: ^3.4.1
+  permission_handler: ^11.3.1
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.1
+
+flutter:
+  uses-material-design: true
+
+# Génération des icônes d'app (Android + iOS) à partir de ton logo.
+# 1) Dépose ton image en 1024x1024 ici : assets/icon/app_icon.png
+# 2) Lance :  dart run flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/app_icon.png"
+  remove_alpha_ios: true
+  # Fond utilisé pour l'icône iOS (pas de transparence autorisée sur iOS)
+  background_color_ios: "#1A1A1A"

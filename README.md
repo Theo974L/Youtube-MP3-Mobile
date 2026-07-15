@@ -1,128 +1,64 @@
-# 🎵 YT Offline Player — App perso Android
+# YT Offline — version Flutter (multiplateforme)
 
-Application Android personnelle (non publiée) permettant de télécharger des pistes audio
-depuis YouTube pour une écoute **hors ligne**, avec un lecteur intégré (play/pause/next/previous).
+Réécriture Flutter/Dart de l'app native, **iOS-ready** (mais l'`.ipa` se build sur macOS
+uniquement — voir plus bas). L'app Kotlin d'origine reste intacte dans le reste du repo.
 
-> ⚠️ **Note légale** : ce projet utilise une librairie d'extraction non officielle de YouTube.
-> Cela viole les conditions d'utilisation de YouTube (même pour un usage strictement privé,
-> non publié, non commercial). Le risque est contractuel, pas destiné à la distribution.
-> Projet gardé strictement personnel, non publié sur le Play Store, non partagé publiquement.
+## ⚠️ Partie 1 (livrée)
+Fondation runnable : **base sqflite**, **extraction + recherche** (youtube_explode_dart),
+**téléchargement** (audio m4a/AAC), **bibliothèque**, **lecture** (just_audio) + **mini-lecteur**.
 
----
+**Partie 2 (à venir)** : playlists, lecteur plein écran (seekbar/shuffle/repeat),
+lecture en arrière-plan + notification (audio_service).
 
-## 🎯 Objectif
+## Stack
+- `provider` — état / injection
+- `sqflite` — base locale (pas de code-gen)
+- `youtube_explode_dart` — extraction YouTube (Android **et** iOS)
+- `just_audio` — lecture audio
+- `cached_network_image` — miniatures
 
-- Rechercher / coller un lien YouTube
-- Extraire l'audio et le stocker en local (téléchargement)
-- Gérer une bibliothèque de morceaux téléchargés
-- Lecteur audio avec contrôle play/pause/next/previous, notification media, lecture en fond
+## Mise en route
 
----
+1. Installe le SDK Flutter (stable) puis vérifie : `flutter doctor`.
 
-## 🧱 Stack technique
+2. Depuis ce dossier, génère les dossiers de plateforme (android/, ios/…) —
+   `flutter create` **ne touche pas** aux fichiers déjà présents (`lib/`, `pubspec.yaml`) :
+   ```
+   flutter create . --org com.laforge --project-name yt_offline --platforms=android,ios
+   ```
 
-| Domaine | Choix | Pourquoi |
-|---|---|---|
-| Langage | **Kotlin** | Standard moderne Android |
-| UI | **Jetpack Compose** | UI déclarative, plus rapide à itérer |
-| Architecture | **MVVM** + `ViewModel` + `StateFlow` | Standard recommandé par Google |
-| Injection de dépendances | **Hilt** | Intégration simple avec Compose/Android |
-| Lecture audio | **Media3 (ExoPlayer)** | Gère nativement play/pause/next/prev, notifications média, lecture background |
-| Extraction YouTube | **NewPipeExtractor** (ou équivalent) | Librairie d'extraction la plus maintenue, pas de clé API officielle nécessaire |
-| Téléchargement | **WorkManager** | Téléchargements fiables même si l'app est fermée/tuée |
-| Stockage local des métadonnées | **Room** | Base de données locale (titre, artiste, chemin fichier, durée...) |
-| Stockage fichiers audio | Stockage interne de l'app (`filesDir`) | Pas besoin de permissions storage externes sur Android récent |
-| Navigation | **Navigation Compose** | Standard pour Compose |
+3. Récupère les dépendances :
+   ```
+   flutter pub get
+   ```
 
----
+4. **Permission Internet (Android)** — ajoute dans
+   `android/app/src/main/AndroidManifest.xml`, juste avant `<application>` :
+   ```xml
+   <uses-permission android:name="android.permission.INTERNET"/>
+   ```
 
-## 🗂️ Architecture du projet (suggestion)
+5. Lance sur un appareil branché :
+   ```
+   flutter run
+   ```
+   ou construis l'APK :
+   ```
+   flutter build apk --release
+   ```
+   (APK dans `build/app/outputs/flutter-apk/app-release.apk`)
 
-```
-app/
- ├── data/
- │    ├── local/           # Room (entities, DAO, database)
- │    ├── remote/          # Wrapper autour de NewPipeExtractor
- │    ├── download/        # WorkManager workers
- │    └── repository/      # Repository pattern (source unique de vérité)
- ├── domain/
- │    ├── model/           # Modèles métier (Track, PlaylistItem...)
- │    └── usecase/         # Cas d'usage (DownloadTrack, GetLibrary, etc.)
- ├── player/
- │    ├── PlaybackService.kt   # MediaSessionService (Media3)
- │    └── PlayerController.kt  # Abstraction play/pause/next/prev
- ├── ui/
- │    ├── search/          # Écran recherche/coller lien
- │    ├── library/         # Écran bibliothèque téléchargée
- │    ├── player/           # Écran lecteur (mini + plein écran)
- │    └── theme/
- └── di/                   # Modules Hilt
-```
+## iOS (.ipa) — rappel
+Impossible sous Windows. Quand tu auras un Mac (Xcode) : `flutter build ipa`.
+Sinon, un CI cloud (Codemagic / GitHub Actions macOS) peut le produire. Le code est déjà
+cross-platform ; il faudra juste, pour l'iOS, ajouter `UIBackgroundModes: audio` dans
+`ios/Runner/Info.plist` (utile surtout en partie 2 pour la lecture en fond).
 
----
-
-## ✅ Tâches à prévoir
-
-### Phase 1 — Setup projet
-- [ ] Créer le projet Android Studio (Kotlin + Compose)
-- [ ] Configurer Hilt
-- [ ] Configurer Room (entité `Track`, DAO basique)
-- [ ] Ajouter la lib d'extraction YouTube (NewPipeExtractor via JitPack ou Maven local)
-- [ ] Ajouter Media3 (`media3-exoplayer`, `media3-session`)
-
-### Phase 2 — Extraction & téléchargement
-- [ ] Écran "coller un lien YouTube"
-- [ ] Appel à la lib d'extraction → récupérer flux audio + métadonnées (titre, durée, thumbnail)
-- [ ] Worker `WorkManager` pour télécharger le flux audio vers stockage interne
-- [ ] Sauvegarde en base Room une fois le téléchargement terminé
-- [ ] Gestion des erreurs (lien invalide, vidéo indisponible, pas de flux audio)
-
-### Phase 3 — Bibliothèque
-- [ ] Écran liste des morceaux téléchargés (Compose `LazyColumn`)
-- [ ] Suppression d'un morceau (fichier + entrée DB)
-- [ ] Affichage taille de stockage utilisée
-- [ ] Recherche/tri dans la bibliothèque
-
-### Phase 4 — Lecteur audio
-- [ ] `MediaSessionService` avec ExoPlayer (Media3)
-- [ ] Contrôles : play/pause/next/previous
-- [ ] Gestion de la file de lecture (queue) à partir de la bibliothèque
-- [ ] Notification média système (contrôles depuis l'écran verrouillé)
-- [ ] Mini-lecteur persistant en bas de l'écran (Compose)
-- [ ] Écran plein écran avec seekbar, artwork, titre/artiste
-
-### Phase 5 — Polish
-- [ ] Gestion des interruptions audio (appel téléphonique, autre app média)
-- [ ] Mode aléatoire / répétition
-- [ ] Icône et nom d'app (usage perso)
-- [ ] Tests manuels sur device réel
-
-### Phase 6 (optionnelle)
-- [ ] Playlists locales
-- [ ] Import depuis plusieurs liens à la fois
-- [ ] Thème sombre/clair
-
----
-
-## 📦 Dépendances clés (exemple `build.gradle.kts`)
-
-```kotlin
-dependencies {
-    implementation("androidx.media3:media3-exoplayer:1.4.1")
-    implementation("androidx.media3:media3-session:1.4.1")
-    implementation("androidx.room:room-runtime:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    ksp("com.google.dagger:hilt-android-compiler:2.51.1")
-    implementation("androidx.work:work-runtime-ktx:2.9.1")
-    // Librairie d'extraction YouTube à ajouter séparément (JitPack)
-}
-```
-
----
-
-## 🔒 Rappels
-- App non publiée, usage strictement personnel
-- Ne pas partager l'APK publiquement
-- Se tenir informé des évolutions de la lib d'extraction (elle casse régulièrement suite aux changements côté YouTube)
+## Notes
+- Les fichiers audio sont dans le stockage privé de l'app (`.../music/<id>.m4a`),
+  lus en interne par le lecteur (comme l'app native).
+- `youtube_explode_dart`, comme toute lib d'extraction, peut casser quand YouTube change :
+  faire `flutter pub upgrade youtube_explode_dart` le cas échéant.
+- Je n'ai pas pu compiler ce projet de mon côté : au premier `flutter pub get`, si une
+  version de dépendance coince, `flutter pub upgrade` règle en général la résolution.
+- Usage strictement personnel (mêmes réserves CGU YouTube que la version native).

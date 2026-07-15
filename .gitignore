@@ -1,85 +1,45 @@
-# =========================================
-# Android / Kotlin / Jetpack Compose
-# =========================================
-
-# Gradle
-.gradle/
-build/
-*/build/
-!gradle/wrapper/gradle-wrapper.jar
-
-# Local configuration
-local.properties
-*.iml
-
-# Kotlin
-*.kotlin_module
-
-# Android Studio
-.idea/
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/gradle.xml
-.idea/**/usage.statistics.xml
-.idea/dictionaries/
-.idea/libraries/
-.idea/modules.xml
-.idea/caches/
-.idea/assetWizardSettings.xml
-
-# Android
-*.apk
-*.ap_ 
-*.aab
-*.dex
+# Miscellaneous
 *.class
-*.jar
-*.keystore
 *.log
-*.hprof
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
 
-# External native build
-.cxx/
-.externalNativeBuild/
-
-# NDK
-obj/
-*.so
-
-# Generated files
-captures/
-output.json
-lint/intermediates/
-lint/generated/
-
-# Firebase / Google Services
-google-services.json
-google-services.json.backup
-*.keystore
-
-# Jetpack Compose tooling
-build/
-.navigation/
-.compose/
-
-# IntelliJ
-out/
+# IntelliJ related
+*.iml
 *.ipr
 *.iws
 .idea/
 
-# Misc
-.DS_Store
-*.swp
-*.swo
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
 
-# Mac
-*.DS_Store
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
 
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
+# Symbolication related
+app.*.symbols
 
-# JetBrains
-*.iml
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
