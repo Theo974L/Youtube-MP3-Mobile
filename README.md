@@ -1,66 +1,100 @@
-# YT Offline — version Flutter (multiplateforme)
+# Guide d'installation — Youtube Player (Flutter)
 
-Réécriture Flutter/Dart de l'app native, **iOS-ready** (mais l'`.ipa` se build sur macOS
-uniquement — voir plus bas). L'app Kotlin d'origine reste intacte dans le reste du repo.
+Guide complet **à partir de zéro** pour builder l'app en **APK Android** et en **IPA iOS**.
 
-## ⚠️ Partie 1 (livrée)
-Fondation runnable : **base sqflite**, **extraction + recherche** (youtube_explode_dart),
-**téléchargement** (audio m4a/AAC), **bibliothèque**, **lecture** (just_audio) + **mini-lecteur**.
+---
 
-**Partie 2 (à venir)** : playlists, lecteur plein écran (seekbar/shuffle/repeat),
-lecture en arrière-plan + notification (audio_service).
+## 0. Prérequis (une seule fois)
 
-## Stack
-- `provider` — état / injection
-- `sqflite` — base locale (pas de code-gen)
-- `youtube_explode_dart` — extraction YouTube (Android **et** iOS)
-- `just_audio` — lecture audio
-- `cached_network_image` — miniatures
-
-## Mise en route
-
-1. Installe le SDK Flutter (stable) puis vérifie : `flutter doctor`.
-
-2. Depuis ce dossier, génère les dossiers de plateforme (android/, ios/…) —
-   `flutter create` **ne touche pas** aux fichiers déjà présents (`lib/`, `pubspec.yaml`) :
+1. **Flutter SDK** (canal stable). Installe-le dans un chemin **sans espaces** (ex. `C:\src\flutter`),
+   ajoute `...\flutter\bin` au **PATH**, puis vérifie :
    ```
-   flutter create . --org com.laforge --project-name yt_offline --platforms=android,ios
+   flutter doctor
    ```
+2. **Android Studio** (fournit le SDK Android). Dans *SDK Manager → SDK Tools*, coche :
+   - « Android SDK Command-line Tools »
+   - « NDK (Side by side) » (la version demandée par le build, ex. `28.2.x`)
+   Puis accepte les licences :
+   ```
+   flutter doctor --android-licenses
+   ```
+3. (Pour iOS uniquement) un **Mac avec Xcode** + un **compte Apple Developer** (99 €/an pour un `.ipa` installable).
+   👉 **L'iOS ne se build PAS sous Windows** — voir la section iOS.
 
-3. Récupère les dépendances :
-   ```
-   flutter pub get
-   ```
+---
 
-4. **Permission Internet (Android)** — ajoute dans
-   `android/app/src/main/AndroidManifest.xml`, juste avant `<application>` :
-   ```xml
-   <uses-permission android:name="android.permission.INTERNET"/>
-   ```
+## 1. Récupérer le projet
 
-5. Lance sur un appareil branché :
-   ```
-   flutter run
-   ```
-   ou construis l'APK :
-   ```
-   flutter build apk --release
-   ```
-   (APK dans `build/app/outputs/flutter-apk/app-release.apk`)
+Clone le dépôt et installe les dépendances :
+```
+git clone <URL_DE_TON_REPO>
+cd yt_offline_flutter
+flutter pub get
+```
 
-## iOS (.ipa) — rappel
-Impossible sous Windows. Quand tu auras un Mac (Xcode) : `flutter build ipa`.
-Sinon, un CI cloud (Codemagic / GitHub Actions macOS) peut le produire. Le code est déjà
-cross-platform ; il faudra juste, pour l'iOS, ajouter `UIBackgroundModes: audio` dans
-`ios/Runner/Info.plist` (utile surtout en partie 2 pour la lecture en fond).
+> Astuce build Windows : projet sous `Documents` souvent synchronisé par OneDrive → mets OneDrive
+> en pause + exclusion antivirus sur le dossier, pour éviter des builds lents/bloqués.
 
-## Notes
-- Les fichiers audio sont dans le stockage privé de l'app (`.../music/<id>.m4a`),
-  lus en interne par le lecteur (comme l'app native).
-- `youtube_explode_dart`, comme toute lib d'extraction, peut casser quand YouTube change :
-  faire `flutter pub upgrade youtube_explode_dart` le cas échéant.
-- Je n'ai pas pu compiler ce projet de mon côté : au premier `flutter pub get`, si une
-  version de dépendance coince, `flutter pub upgrade` règle en général la résolution.
-- Usage strictement personnel (mêmes réserves CGU YouTube que la version native).
+---
 
-Akjsdhfkj2587224!
+## 2. Android — APK
+
+Lancer sur un appareil (dev, hot reload) :
+```
+flutter run
+```
+
+Construire l'**APK release** :
+```
+flutter build apk --release
+```
+→ `build\app\outputs\flutter-apk\app-release.apk`
+
+APK **plus léger** (un par architecture — prends `arm64-v8a` pour un tél récent) :
+```
+flutter build apk --release --split-per-abi
+```
+
+**Installer l'APK** : copie le fichier sur le tél (câble USB conseillé) et ouvre-le.
+Sur Samsung : autorise « Installer des applis inconnues » pour ton explorateur de fichiers.
+
+> Signature : par défaut Flutter signe le release avec la **clé debug** — suffisant pour un usage perso.
+> Pour publier, il faut ta propre **keystore** (voir doc Flutter « Signing the app »).
+
+---
+
+## 3. iOS — IPA (nécessite macOS)
+
+### Option A — tu as un Mac
+```
+flutter build ipa --release
+```
+→ `build/ios/ipa/*.ipa` (Xcode + compte Apple Developer requis pour signer).
+Ou, iPhone branché en USB : `flutter run --release` installe directement.
+
+### Option B — pas de Mac : build dans le cloud (Codemagic)
+Le fichier `codemagic.yaml` est déjà à la racine. Étapes :
+1. Pousse le projet sur **GitHub**.
+2. Crée un compte **codemagic.io**, connecte le repo.
+3. Dans Codemagic → *Team → Integrations → App Store Connect* : ajoute une **clé API**
+   (générée sur App Store Connect → *Users and Access → Integrations*), nommée **`CodemagicApiKey`**.
+4. Déclare l'App ID `com.laforge.ytOffline` sur developer.apple.com et crée la fiche app sur App Store Connect.
+5. Lance le workflow **`ios-release`** → récupère le `.ipa` (artifacts + email).
+6. Installe via **TestFlight**.
+
+---
+
+## 4. Dépannage rapide
+
+| Problème | Solution |
+|---|---|
+| `flutter` non reconnu | Ajouter `...\flutter\bin` au PATH, rouvrir le terminal |
+| Échec install NDK / zip corrompu | Installer le NDK via Android Studio (SDK Tools), pas via Gradle |
+| `adb: failed to install` (émulateur) | Cold Boot de l'émulateur, ou passer par un vrai tél en USB |
+| Install très lente en Wi-Fi (ADB) | Utiliser le **câble USB** |
+| Build Gradle lent/bloqué | Pause OneDrive + exclusion antivirus sur le dossier |
+
+---
+
+Usage strictement personnel. L'extraction YouTube dépend de `youtube_explode_dart` :
+si l'extraction casse un jour, faire `flutter pub upgrade youtube_explode_dart`.
