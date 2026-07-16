@@ -27,8 +27,8 @@ Guide complet **à partir de zéro** pour builder l'app en **APK Android** et en
 
 Clone le dépôt et installe les dépendances :
 ```
-git clone <URL_DE_TON_REPO>
-cd yt_offline_flutter
+git clone https://github.com/Theo974L/Youtube-MP3-Mobile.git
+cd youtube-mp3-mobile
 flutter pub get
 ```
 
