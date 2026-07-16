@@ -246,7 +246,7 @@ This prevents slow or blocked Flutter builds.
 
 ## Run the application
 
-[Download latest Android APK](APK_RELEASE_HERE/app-release.apk)
+[Download latest Android APK](APK_RELEASE_HERE/YoutubePlayer-v1.0.0.apk)
 
 or
 
