@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/banner.png" alt="Youtube Player Banner" width="100%">
+  <img src="assets/banner/banner.png" alt="Youtube Player Banner" width="100%">
 </p>
 
-<h1 align="center">Youtube Player</h1>
+<h1 align="center">Youtube Player Mobile</h1>
 
 <p align="center">
 A modern offline YouTube music player built with Flutter.
