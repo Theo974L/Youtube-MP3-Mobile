@@ -415,24 +415,11 @@ Users are responsible for complying with YouTube's Terms of Service and applicab
 ---
 
 # Author
-
 <p align="center">
-
 <b>Theo Laforge</b>
-
 <br>
-
 GitHub:
 <br>
-
 https://github.com/Theo974L
-
 </p>
-
 ---
-
-<p align="center">
-
-Made with Flutter
-
-</p>
