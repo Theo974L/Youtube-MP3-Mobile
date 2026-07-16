@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.png" alt="Youtube Player Banner" width="100%">
+  <img src="assets/banner/banner.png" alt="Youtube Player Banner" width="100%">
 </p>
 
 <h1 align="center">
