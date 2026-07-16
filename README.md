@@ -4,6 +4,18 @@ Guide complet **à partir de zéro** pour builder l'app en **APK Android** et en
 
 ---
 
+<p align="center">
+
+![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)
+
+![Android](https://img.shields.io/badge/Android-Supported-success)
+
+![iOS](https://img.shields.io/badge/iOS-Supported-lightgrey)
+
+![License](https://img.shields.io/badge/License-MIT-blue)
+
+</p>
+
 ## 0. Prérequis (Uniquement pour IOS)
 
 1. **Flutter SDK** (canal stable). Installe-le dans un chemin **sans espaces** (ex. `C:\src\flutter`),
