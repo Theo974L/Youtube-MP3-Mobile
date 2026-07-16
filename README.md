@@ -40,26 +40,10 @@ flutter pub get
 ## 2. Android — APK
 
 Lancer sur un appareil (dev, hot reload) :
-```
-flutter run
-```
 
-Construire l'**APK release** :
-```
-flutter build apk --release
-```
-→ `build\app\outputs\flutter-apk\app-release.apk`
+**APK_RELEASE_HERE/app-release.apk**
 
-APK **plus léger** (un par architecture — prends `arm64-v8a` pour un tél récent) :
-```
-flutter build apk --release --split-per-abi
-```
-
-**Installer l'APK** : copie le fichier sur le tél (câble USB conseillé) et ouvre-le.
-Sur Samsung : autorise « Installer des applis inconnues » pour ton explorateur de fichiers.
-
-> Signature : par défaut Flutter signe le release avec la **clé debug** — suffisant pour un usage perso.
-> Pour publier, il faut ta propre **keystore** (voir doc Flutter « Signing the app »).
+> Sur Android : Appuyer sur app-release.apk 
 
 ---
 
